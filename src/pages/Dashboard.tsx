@@ -1,8 +1,11 @@
 import { Card } from "@/components/ui/card";
-import { ShoppingBag, ChefHat, TrendingUp, DollarSign, Package, Clock, MessageSquare, Settings as SettingsIcon, BarChart3, Image } from "lucide-react";
+import { ShoppingBag, ChefHat, TrendingUp, DollarSign, Package, Clock, MessageSquare, Settings as SettingsIcon, BarChart3, Image, Users, Utensils } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+  
   return (
     <div className="min-h-screen bg-background">
       <div className="bg-gradient-primary px-8 py-12">
@@ -67,7 +70,7 @@ export default function Dashboard() {
             <h2 className="text-xl font-bold">Módulos Principais</h2>
           </div>
           <div className="grid gap-4 md:grid-cols-4">
-            <Card className="p-6 hover:shadow-md transition-shadow">
+            <Card className="p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate('/pedidos')}>
               <ShoppingBag className="h-8 w-8 text-primary mb-3" />
               <h3 className="font-semibold mb-2">Pedidos Online</h3>
               <p className="text-sm text-muted-foreground mb-3">Gerencie pedidos de delivery e retirada</p>
@@ -77,7 +80,7 @@ export default function Dashboard() {
               </Button>
             </Card>
 
-            <Card className="p-6 hover:shadow-md transition-shadow">
+            <Card className="p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate('/pedidos')}>
               <Package className="h-8 w-8 text-purple-500 mb-3" />
               <h3 className="font-semibold mb-2">Pedidos Balcão</h3>
               <p className="text-sm text-muted-foreground mb-3">PDV para atendimento presencial</p>
@@ -87,8 +90,8 @@ export default function Dashboard() {
               </Button>
             </Card>
 
-            <Card className="p-6 hover:shadow-md transition-shadow">
-              <SettingsIcon className="h-8 w-8 text-green-500 mb-3" />
+            <Card className="p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate('/salao')}>
+              <Utensils className="h-8 w-8 text-green-500 mb-3" />
               <h3 className="font-semibold mb-2">Pedidos Salão</h3>
               <p className="text-sm text-muted-foreground mb-3">Gestão de mesas e comandas</p>
               <p className="text-xs text-muted-foreground">Mesas e comandas</p>
@@ -97,7 +100,7 @@ export default function Dashboard() {
               </Button>
             </Card>
 
-            <Card className="p-6 hover:shadow-md transition-shadow">
+            <Card className="p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate('/cardapio')}>
               <Image className="h-8 w-8 text-orange-500 mb-3" />
               <h3 className="font-semibold mb-2">Gestão de Cardápio</h3>
               <p className="text-sm text-muted-foreground mb-3">Configure categorias e produtos</p>
@@ -115,7 +118,7 @@ export default function Dashboard() {
             <h2 className="text-xl font-bold">Ações Rápidas</h2>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
-            <Card className="p-4 hover:shadow-md transition-shadow">
+            <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate('/cardapio')}>
               <div className="flex items-center gap-3">
                 <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
                   <Package className="h-6 w-6 text-primary" />
@@ -127,7 +130,7 @@ export default function Dashboard() {
               </div>
             </Card>
 
-            <Card className="p-4 hover:shadow-md transition-shadow">
+            <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate('/cozinha')}>
               <div className="flex items-center gap-3">
                 <div className="h-12 w-12 rounded-lg bg-blue-500/10 flex items-center justify-center">
                   <ChefHat className="h-6 w-6 text-blue-500" />
@@ -139,7 +142,7 @@ export default function Dashboard() {
               </div>
             </Card>
 
-            <Card className="p-4 hover:shadow-md transition-shadow">
+            <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate('/pedidos')}>
               <div className="flex items-center gap-3">
                 <div className="h-12 w-12 rounded-lg bg-purple-500/10 flex items-center justify-center">
                   <Clock className="h-6 w-6 text-purple-500" />
@@ -151,7 +154,7 @@ export default function Dashboard() {
               </div>
             </Card>
 
-            <Card className="p-4 hover:shadow-md transition-shadow">
+            <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate('/relatorios')}>
               <div className="flex items-center gap-3">
                 <div className="h-12 w-12 rounded-lg bg-gray-500/10 flex items-center justify-center">
                   <BarChart3 className="h-6 w-6 text-gray-500" />
@@ -163,7 +166,7 @@ export default function Dashboard() {
               </div>
             </Card>
 
-            <Card className="p-4 hover:shadow-md transition-shadow">
+            <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate('/configuracoes')}>
               <div className="flex items-center gap-3">
                 <div className="h-12 w-12 rounded-lg bg-green-500/10 flex items-center justify-center">
                   <SettingsIcon className="h-6 w-6 text-green-500" />
@@ -175,7 +178,7 @@ export default function Dashboard() {
               </div>
             </Card>
 
-            <Card className="p-4 hover:shadow-md transition-shadow">
+            <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate('/cardapio')}>
               <div className="flex items-center gap-3">
                 <div className="h-12 w-12 rounded-lg bg-orange-500/10 flex items-center justify-center">
                   <Image className="h-6 w-6 text-orange-500" />

@@ -47,6 +47,18 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        status: {
+          new: "hsl(var(--status-new))",
+          "new-foreground": "hsl(var(--status-new-foreground))",
+          preparing: "hsl(var(--status-preparing))",
+          "preparing-foreground": "hsl(var(--status-preparing-foreground))",
+          ready: "hsl(var(--status-ready))",
+          "ready-foreground": "hsl(var(--status-ready-foreground))",
+          completed: "hsl(var(--status-completed))",
+          "completed-foreground": "hsl(var(--status-completed-foreground))",
+          scheduled: "hsl(var(--status-scheduled))",
+          "scheduled-foreground": "hsl(var(--status-scheduled-foreground))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -57,6 +69,10 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      backgroundImage: {
+        "gradient-primary": "var(--gradient-primary)",
+        "gradient-dark": "var(--gradient-dark)",
       },
       borderRadius: {
         lg: "var(--radius)",

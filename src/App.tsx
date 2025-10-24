@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Sidebar } from "@/components/Sidebar";
+import { AppProvider } from "@/contexts/AppContext";
 import Dashboard from "./pages/Dashboard";
 import Pedidos from "./pages/Pedidos";
 import Cardapio from "./pages/Cardapio";
@@ -14,36 +15,44 @@ import Relatorios from "./pages/Relatorios";
 import Configuracoes from "./pages/Configuracoes";
 import Cupons from "./pages/Cupons";
 import Cashback from "./pages/Cashback";
+import PDV from "./pages/PDV";
+import MonitorCozinha from "./pages/MonitorCozinha";
+import MonitorGestor from "./pages/MonitorGestor";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <div className="flex">
-          <Sidebar />
-          <main className="flex-1 overflow-y-auto">
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/pedidos" element={<Pedidos />} />
-              <Route path="/cardapio" element={<Cardapio />} />
-              <Route path="/salao" element={<Salao />} />
-              <Route path="/comandas" element={<Comandas />} />
-              <Route path="/cozinha" element={<Cozinha />} />
-              <Route path="/relatorios" element={<Relatorios />} />
-              <Route path="/configuracoes" element={<Configuracoes />} />
-              <Route path="/cupons" element={<Cupons />} />
-              <Route path="/cashback" element={<Cashback />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </main>
-        </div>
-      </BrowserRouter>
-    </TooltipProvider>
+    <AppProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <div className="flex">
+            <Sidebar />
+            <main className="flex-1 overflow-y-auto">
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/pedidos" element={<Pedidos />} />
+                <Route path="/cardapio" element={<Cardapio />} />
+                <Route path="/salao" element={<Salao />} />
+                <Route path="/comandas" element={<Comandas />} />
+                <Route path="/cozinha" element={<Cozinha />} />
+                <Route path="/pdv" element={<PDV />} />
+                <Route path="/monitor-cozinha" element={<MonitorCozinha />} />
+                <Route path="/monitor-gestor" element={<MonitorGestor />} />
+                <Route path="/relatorios" element={<Relatorios />} />
+                <Route path="/configuracoes" element={<Configuracoes />} />
+                <Route path="/cupons" element={<Cupons />} />
+                <Route path="/cashback" element={<Cashback />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </main>
+          </div>
+        </BrowserRouter>
+      </TooltipProvider>
+    </AppProvider>
   </QueryClientProvider>
 );
 

@@ -1,50 +1,42 @@
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, Edit, Trash2, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-
-const categories = [
-  {
-    id: 1,
-    name: "Pizzas",
-    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591",
-    promotion: true,
-  },
-  {
-    id: 2,
-    name: "Bebidas",
-    image: "https://images.unsplash.com/photo-1546173159-315724a31696",
-    promotion: true,
-    description: "Refrigerantes, sucos e águas",
-  },
-  {
-    id: 3,
-    name: "Sobremesas",
-    image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb",
-    promotion: true,
-    description: "Deliciosas sobremesas para finalizar sua refeição",
-  },
-  {
-    id: 4,
-    name: "Lanches",
-    description: "Com os melhores lanches da cidade!",
-  },
-];
-
-const menuItems = [
-  {
-    id: 1,
-    name: "Marguerita",
-    description: "Dbdbdb",
-    price: 10,
-    promotionalPrice: 9,
-    image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002",
-    category: "Pizzas",
-  },
-];
+import { useApp } from "@/contexts/AppContext";
+import { AddCategoryDialog } from "@/components/dialogs/AddCategoryDialog";
+import { AddMenuItemDialog } from "@/components/dialogs/AddMenuItemDialog";
+import { ExtractMenuDialog } from "@/components/dialogs/ExtractMenuDialog";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Cardapio() {
+  const { categories, menuItems, deleteCategory, deleteMenuItem } = useApp();
+  const [categoryDialogOpen, setCategoryDialogOpen] = useState(false);
+  const [itemDialogOpen, setItemDialogOpen] = useState(false);
+  const [extractDialogOpen, setExtractDialogOpen] = useState(false);
+  const { toast } = useToast();
+
+  const handleDeleteCategory = (id: string, name: string) => {
+    if (confirm(`Deseja realmente excluir a categoria "${name}"?`)) {
+      deleteCategory(id);
+      toast({
+        title: "Categoria excluída",
+        description: `"${name}" foi removida do cardápio`,
+      });
+    }
+  };
+
+  const handleDeleteItem = (id: string, name: string) => {
+    if (confirm(`Deseja realmente excluir "${name}"?`)) {
+      deleteMenuItem(id);
+      toast({
+        title: "Item excluído",
+        description: `"${name}" foi removido do cardápio`,
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background p-8">
       <div className="mb-6 flex items-center justify-between">
@@ -52,7 +44,7 @@ export default function Cardapio() {
           <h1 className="text-3xl font-bold mb-2">Gestão de Cardápio</h1>
           <p className="text-muted-foreground">Configure categorias e itens do seu menu</p>
         </div>
-        <Button size="lg" className="gap-2">
+        <Button size="lg" className="gap-2" onClick={() => setExtractDialogOpen(true)}>
           <Sparkles className="h-4 w-4" />
           Extrair com IA
         </Button>
@@ -66,7 +58,7 @@ export default function Cardapio() {
 
         <TabsContent value="categorias">
           <div className="mb-4">
-            <Button className="gap-2">
+            <Button className="gap-2" onClick={() => setCategoryDialogOpen(true)}>
               <Plus className="h-4 w-4" />
               Nova Categoria
             </Button>
@@ -107,7 +99,12 @@ export default function Cardapio() {
                       <Edit className="h-3 w-3" />
                       Editar
                     </Button>
-                    <Button variant="outline" size="sm" className="gap-2 text-destructive hover:bg-destructive hover:text-destructive-foreground">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="gap-2 text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                      onClick={() => handleDeleteCategory(category.id, category.name)}
+                    >
                       <Trash2 className="h-3 w-3" />
                     </Button>
                   </div>
@@ -119,7 +116,7 @@ export default function Cardapio() {
 
         <TabsContent value="itens">
           <div className="mb-4">
-            <Button className="gap-2">
+            <Button className="gap-2" onClick={() => setItemDialogOpen(true)}>
               <Plus className="h-4 w-4" />
               Novo Item
             </Button>
@@ -160,7 +157,12 @@ export default function Cardapio() {
                       <Edit className="h-3 w-3" />
                       Editar
                     </Button>
-                    <Button variant="outline" size="sm" className="gap-2 text-destructive hover:bg-destructive hover:text-destructive-foreground">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="gap-2 text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                      onClick={() => handleDeleteItem(item.id, item.name)}
+                    >
                       <Trash2 className="h-3 w-3" />
                     </Button>
                   </div>
@@ -170,6 +172,10 @@ export default function Cardapio() {
           </div>
         </TabsContent>
       </Tabs>
+
+      <AddCategoryDialog open={categoryDialogOpen} onOpenChange={setCategoryDialogOpen} />
+      <AddMenuItemDialog open={itemDialogOpen} onOpenChange={setItemDialogOpen} />
+      <ExtractMenuDialog open={extractDialogOpen} onOpenChange={setExtractDialogOpen} />
     </div>
   );
 }

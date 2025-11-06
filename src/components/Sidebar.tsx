@@ -1,4 +1,4 @@
-import { LayoutDashboard, ShoppingCart, UtensilsCrossed, Utensils, Receipt, ChefHat, BarChart3, Settings, Tag, DollarSign, LucideIcon } from "lucide-react";
+import { LayoutDashboard, ShoppingCart, UtensilsCrossed, Utensils, Receipt, ChefHat, BarChart3, Settings, Tag, DollarSign, Monitor, TrendingUp, CreditCard, LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
 
@@ -12,6 +12,7 @@ const mainNavItems: NavItem[] = [
   { title: "Dashboard", href: "/", icon: LayoutDashboard },
   { title: "Pedidos Online", href: "/pedidos", icon: ShoppingCart },
   { title: "Cardápio", href: "/cardapio", icon: UtensilsCrossed },
+  { title: "PDV", href: "/pdv", icon: CreditCard },
   { title: "Salão", href: "/salao", icon: Utensils },
   { title: "Comandas", href: "/comandas", icon: Receipt },
   { title: "Cozinha (KDS)", href: "/cozinha", icon: ChefHat },
@@ -22,6 +23,11 @@ const mainNavItems: NavItem[] = [
 const marketingNavItems: NavItem[] = [
   { title: "Cupons", href: "/cupons", icon: Tag },
   { title: "Cashback", href: "/cashback", icon: DollarSign },
+];
+
+const monitorNavItems: NavItem[] = [
+  { title: "Monitor Cozinha", href: "/monitor-cozinha", icon: Monitor },
+  { title: "Monitor Gestor", href: "/monitor-gestor", icon: TrendingUp },
 ];
 
 export function Sidebar() {
@@ -66,6 +72,29 @@ export function Sidebar() {
         <div className="mt-6 space-y-1 px-3">
           <p className="px-3 text-xs font-semibold text-muted-foreground">MARKETING</p>
           {marketingNavItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = location.pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                to={item.href}
+                className={cn(
+                  "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors",
+                  isActive
+                    ? "bg-primary text-primary-foreground"
+                    : "text-sidebar-foreground hover:bg-sidebar-accent"
+                )}
+              >
+                <Icon className="h-4 w-4" />
+                {item.title}
+              </Link>
+            );
+          })}
+        </div>
+
+        <div className="mt-6 space-y-1 px-3">
+          <p className="px-3 text-xs font-semibold text-muted-foreground">MONITORES</p>
+          {monitorNavItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.href;
             return (

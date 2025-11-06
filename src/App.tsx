@@ -4,7 +4,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Sidebar } from "@/components/Sidebar";
-import { AppProvider } from "@/contexts/AppContext";
+import { AuthProvider } from "@/hooks/useAuth";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
+import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Pedidos from "./pages/Pedidos";
 import Cardapio from "./pages/Cardapio";
@@ -19,42 +21,59 @@ import PDV from "./pages/PDV";
 import MonitorCozinha from "./pages/MonitorCozinha";
 import MonitorGestor from "./pages/MonitorGestor";
 import Estoque from "./pages/Estoque";
+import Usuarios from "./pages/Usuarios";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <AppProvider>
+    <AuthProvider>
       <TooltipProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <div className="flex">
-            <Sidebar />
-            <main className="flex-1 overflow-y-auto">
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/pedidos" element={<Pedidos />} />
-                <Route path="/cardapio" element={<Cardapio />} />
-                <Route path="/salao" element={<Salao />} />
-                <Route path="/comandas" element={<Comandas />} />
-                <Route path="/cozinha" element={<Cozinha />} />
-                <Route path="/estoque" element={<Estoque />} />
-                <Route path="/pdv" element={<PDV />} />
-                <Route path="/monitor-cozinha" element={<MonitorCozinha />} />
-                <Route path="/monitor-gestor" element={<MonitorGestor />} />
-                <Route path="/relatorios" element={<Relatorios />} />
-                <Route path="/configuracoes" element={<Configuracoes />} />
-                <Route path="/cupons" element={<Cupons />} />
-                <Route path="/cashback" element={<Cashback />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-          </div>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/*" element={
+              <ProtectedRoute>
+                <div className="flex h-screen">
+                  <Sidebar />
+                  <main className="flex-1 overflow-y-auto">
+                    <Routes>
+                      <Route path="/" element={<Dashboard />} />
+                      <Route path="/pedidos" element={<Pedidos />} />
+                      <Route path="/cardapio" element={<Cardapio />} />
+                      <Route path="/salao" element={<Salao />} />
+                      <Route path="/comandas" element={<Comandas />} />
+                      <Route path="/cozinha" element={<Cozinha />} />
+                      <Route path="/estoque" element={<Estoque />} />
+                      <Route path="/pdv" element={<PDV />} />
+                      <Route path="/monitor-cozinha" element={<MonitorCozinha />} />
+                      <Route path="/monitor-gestor" element={
+                        <ProtectedRoute requireManager>
+                          <MonitorGestor />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="/relatorios" element={<Relatorios />} />
+                      <Route path="/configuracoes" element={<Configuracoes />} />
+                      <Route path="/cupons" element={<Cupons />} />
+                      <Route path="/cashback" element={<Cashback />} />
+                      <Route path="/usuarios" element={
+                        <ProtectedRoute requireAdmin>
+                          <Usuarios />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </main>
+                </div>
+              </ProtectedRoute>
+            } />
+          </Routes>
         </BrowserRouter>
       </TooltipProvider>
-    </AppProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 

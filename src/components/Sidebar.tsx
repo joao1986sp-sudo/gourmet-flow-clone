@@ -1,6 +1,8 @@
-import { LayoutDashboard, ShoppingCart, UtensilsCrossed, Utensils, Receipt, ChefHat, BarChart3, Settings, Tag, DollarSign, Monitor, TrendingUp, CreditCard, Package, LucideIcon } from "lucide-react";
+import { LayoutDashboard, ShoppingCart, UtensilsCrossed, Utensils, Receipt, ChefHat, BarChart3, Settings, Tag, DollarSign, Monitor, TrendingUp, CreditCard, Package, Users, LogOut, LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/button";
 
 interface NavItem {
   title: string;
@@ -33,6 +35,13 @@ const monitorNavItems: NavItem[] = [
 
 export function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isAdmin, isManager, signOut, user } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/login');
+  };
 
   return (
     <div className="flex h-screen w-64 flex-col border-r bg-sidebar">
@@ -96,6 +105,11 @@ export function Sidebar() {
         <div className="mt-6 space-y-1 px-3">
           <p className="px-3 text-xs font-semibold text-muted-foreground">MONITORES</p>
           {monitorNavItems.map((item) => {
+            // Monitor Gestor só para admin/manager
+            if (item.href === '/monitor-gestor' && !isManager) {
+              return null;
+            }
+            
             const Icon = item.icon;
             const isActive = location.pathname === item.href;
             return (
@@ -115,18 +129,46 @@ export function Sidebar() {
             );
           })}
         </div>
+
+        {isAdmin && (
+          <div className="mt-6 space-y-1 px-3">
+            <p className="px-3 text-xs font-semibold text-muted-foreground">ADMINISTRAÇÃO</p>
+            <Link
+              to="/usuarios"
+              className={cn(
+                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors",
+                location.pathname === "/usuarios"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-sidebar-foreground hover:bg-sidebar-accent"
+              )}
+            >
+              <Users className="h-4 w-4" />
+              Usuários
+            </Link>
+          </div>
+        )}
       </div>
 
-      <div className="border-t p-4">
+      <div className="border-t p-4 space-y-2">
         <div className="flex items-center gap-3 rounded-lg bg-sidebar-accent p-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
-            R
+            {user?.email?.[0].toUpperCase()}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium truncate">Restaurante</p>
-            <p className="text-xs text-muted-foreground truncate">Gerenciar</p>
+            <p className="text-sm font-medium truncate">{user?.email}</p>
+            <p className="text-xs text-muted-foreground truncate">
+              {isAdmin ? 'Administrador' : isManager ? 'Gerente' : 'Funcionário'}
+            </p>
           </div>
         </div>
+        <Button
+          variant="ghost"
+          className="w-full justify-start"
+          onClick={handleSignOut}
+        >
+          <LogOut className="h-4 w-4 mr-2" />
+          Sair
+        </Button>
       </div>
     </div>
   );

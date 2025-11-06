@@ -18,6 +18,7 @@ import Cashback from "./pages/Cashback";
 import PDV from "./pages/PDV";
 import MonitorCozinha from "./pages/MonitorCozinha";
 import MonitorGestor from "./pages/MonitorGestor";
+import Estoque from "./pages/Estoque";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,7 @@ const App = () => (
                 <Route path="/salao" element={<Salao />} />
                 <Route path="/comandas" element={<Comandas />} />
                 <Route path="/cozinha" element={<Cozinha />} />
+                <Route path="/estoque" element={<Estoque />} />
                 <Route path="/pdv" element={<PDV />} />
                 <Route path="/monitor-cozinha" element={<MonitorCozinha />} />
                 <Route path="/monitor-gestor" element={<MonitorGestor />} />

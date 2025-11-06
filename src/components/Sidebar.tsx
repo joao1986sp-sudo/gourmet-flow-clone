@@ -1,4 +1,4 @@
-import { LayoutDashboard, ShoppingCart, UtensilsCrossed, Utensils, Receipt, ChefHat, BarChart3, Settings, Tag, DollarSign, Monitor, TrendingUp, CreditCard, LucideIcon } from "lucide-react";
+import { LayoutDashboard, ShoppingCart, UtensilsCrossed, Utensils, Receipt, ChefHat, BarChart3, Settings, Tag, DollarSign, Monitor, TrendingUp, CreditCard, Package, LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
 
@@ -16,6 +16,7 @@ const mainNavItems: NavItem[] = [
   { title: "Salão", href: "/salao", icon: Utensils },
   { title: "Comandas", href: "/comandas", icon: Receipt },
   { title: "Cozinha (KDS)", href: "/cozinha", icon: ChefHat },
+  { title: "Estoque", href: "/estoque", icon: Package },
   { title: "Relatórios", href: "/relatorios", icon: BarChart3 },
   { title: "Configurações", href: "/configuracoes", icon: Settings },
 ];
